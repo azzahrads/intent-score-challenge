@@ -25,21 +25,12 @@ public class ResultActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         Match match = getIntent().getParcelableExtra(DATA_KEY);
         if (extras != null) {
-            String name = "";
             if(match.resultScore().equals(match.getHomeTeam())) {
-                for (String win : match.getHomeScorer()) {
-                    name += win + "\n";
-                    Log.d("who?", "list of scorer " + win);
-                }
                 tvWinner.setText("The winner is "+ match.resultScore());
-                tvList.setText(name);
+                tvList.setText(match.homeScorer());
             }else if(match.resultScore().equals(match.getAwayTeam())) {
-                for (String win : match.getAwayScorer()) {
-                    name += win + "\n";
-                    Log.d("who?", "list of scorer " + win);
-                }
                 tvWinner.setText("The winner is "+ match.resultScore());
-                tvList.setText(name);
+                tvList.setText(match.awayScorer());
             }else{
                 tvWinner.setText(match.resultScore());
                 tvList.setText("");

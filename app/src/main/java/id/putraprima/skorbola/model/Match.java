@@ -15,15 +15,14 @@ public class Match implements Parcelable{
     private int homeScore = 0;
     private ArrayList<String> awayScorer = new ArrayList<>();
     private int awayScore = 0;
-    private String result = "";
 
-    public void addHomeScore(String name){
-        homeScorer.add(name);
+    public void addHomeScore(String name, String time){
+        homeScorer.add(name + ", " + time);
         homeScore++;
     }
 
-    public void addAwayScore(String name){
-        awayScorer.add(name);
+    public void addAwayScore(String name, String time){
+        awayScorer.add(name + ", " + time);
         awayScore++;
     }
 
@@ -37,6 +36,22 @@ public class Match implements Parcelable{
         }else{
             return "Invalid";
         }
+    }
+
+    public String awayScorer(){
+        String scorer = "";
+        for(String as : awayScorer){
+            scorer += as + "\n";
+        }
+        return scorer;
+    }
+
+    public String homeScorer(){
+        String scorer = "";
+        for(String hs : homeScorer){
+            scorer += hs + "\n";
+        }
+        return scorer;
     }
 
     public Match(String homeTeam, Uri homeLogo, String awayTeam, Uri awayLogo, int homeScore, int awayScore) {

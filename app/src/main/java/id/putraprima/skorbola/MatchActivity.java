@@ -18,9 +18,10 @@ import id.putraprima.skorbola.model.Match;
 public class MatchActivity extends AppCompatActivity {
     public static final String DATA_KEY = "data";
     public static final String ADD_KEY = "add";
+    private static final String TIME_KEY = "time";
 
-    TextView tvScoreHome;
-    TextView tvScoreAway;
+    TextView tvScoreHome, tvGoalHome;
+    TextView tvScoreAway, tvGoalAway;
     TextView tvHome;
     TextView tvAway;
 
@@ -35,6 +36,8 @@ public class MatchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_match);
         tvHome = findViewById(R.id.txt_home);
         tvAway = findViewById(R.id.txt_away);
+        tvGoalHome = findViewById(R.id.txt_home_last);
+        tvGoalAway = findViewById(R.id.txt_away_last);
         tvScoreHome = findViewById(R.id.score_home);
         tvScoreAway = findViewById(R.id.score_away);
         ivHome = findViewById(R.id.home_logo);
@@ -65,13 +68,11 @@ public class MatchActivity extends AppCompatActivity {
 
     public void addHomeScore(View view) {
         Intent intent = new Intent(this, ScorerActivity.class);
-        intent.putExtra(DATA_KEY, match);
         startActivityForResult(intent, 1);
     }
 
     public void addAwayScore(View view) {
         Intent intent = new Intent(this, ScorerActivity.class);
-        intent.putExtra(DATA_KEY, match);
         startActivityForResult(intent, 2);
     }
 
@@ -89,14 +90,16 @@ public class MatchActivity extends AppCompatActivity {
         }
         if(requestCode == 1){
             if(resultCode == RESULT_OK){
-                match.addHomeScore(data.getStringExtra(ADD_KEY));
+                match.addHomeScore(data.getStringExtra(ADD_KEY), data.getStringExtra(TIME_KEY));
                 tvScoreHome.setText(String.valueOf(match.getHomeScore()));
+                tvGoalHome.setText(match.homeScorer());
                 Log.d("who?", "scorer is " + match.getHomeScorer());
             }
         }else if(requestCode == 2){
             if(resultCode == RESULT_OK) {
-                match.addAwayScore(data.getStringExtra(ADD_KEY));
+                match.addAwayScore(data.getStringExtra(ADD_KEY), data.getStringExtra(TIME_KEY));
                 tvScoreAway.setText(String.valueOf(match.getAwayScore()));
+                tvGoalAway.setText(match.awayScorer());
                 Log.d("who?", "scorer is " + match.getHomeScorer());
             }
         }
